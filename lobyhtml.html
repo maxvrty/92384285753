@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример страницы</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;600&display=swap'); /* Используем шрифт с весом 300 для light и 600 для semi bold */
+         body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Выравнивание по верху */
+            align-items: center;
+            height: 100vh; /* Увеличиваем высоту до 100% от высоты окна браузера */
+            margin: 0;
+            font-family: 'Sora', sans-serif; /* Применяем шрифт Sora ко всему телу документа */
+        }
+        .white-squares-container {
+            display: flex;
+            flex-direction: row; /* Располагаем белые квадраты в один ряд */
+            margin-top: 20px;
+        }
+
+        .black-square {
+            width: 270px;
+            height: 50px; /* Увеличиваем высоту */
+            background-color: #1B1B1B;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 2px solid gray; /* Добавляем серую обводку */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Центрируем текст по вертикали */
+            align-items: flex-start; /* Выравниваем текст по левому краю */
+            color: white; /* Цвет текста */
+            font-family: 'Sora', sans-serif; /* Применяем шрифт Sora */
+            font-size: 24px; /* Размер шрифта */
+            padding: 10px; /* Добавляем отступы */
+            position: relative; /* Для позиционирования внутреннего черного квадрата */
+        }
+        .black-square .top-left {
+            margin-top: 10px; /* Добавляем отступ сверху */
+            font-weight: normal; /* Обычный вес шрифта */
+            position: relative;
+            top: -10px; /* Поднимаем текст выше */
+        }
+        .black-square .gray-text {
+            color: gray; /* Серый цвет текста */
+            margin-top: -8px; /* Добавляем отступ сверху */
+            font-size: 10px; /* Уменьшаем размер шрифта */
+            font-weight: 300; /* Применяем стиль light */
+        }
+        .inner-grey-square {
+            width: 65px;
+            height: 25px;
+            background-color: #2D2D2D;
+            border-radius: 15px;
+            position: absolute;
+            right: 10px; /* Позиционируем внутри внешнего черного квадрата */
+            top: 50%; /* Позиционируем по вертикали */
+            transform: translateY(-50%); /* Центрируем по вертикали */
+            display: flex;
+            justify-content: center; /* Центрируем текст по горизонтали */
+            align-items: center; /* Центрируем текст по вертикали */
+            color: #1ADB5C; /* Цвет текста */
+            font-size: 10px; /* Размер шрифта */
+        }
+        .white-square {
+            width: 60px;
+            height: 40px;
+            background-color: white; /* Изменяем цвет фона на белый */
+            border-radius: 15px;
+            margin-top: 5px;
+            border: 1px solid #D8D8D8; /* Добавляем серую обводку */
+            margin-left: 7px; /* Добавляем отступ между белыми квадратами */
+        }
+        .large-square {
+            width: 270px;
+            height: 285px;
+            background-color: white; /* Изменяем цвет фона на белый */
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 1px solid #D8D8D8; /* Добавляем серую обводку */
+            position: relative; /* Для позиционирования псевдоэлемента */
+        }
+        .large-square::after {
+            content: '';
+            position: absolute;
+            bottom: -20px; /* Позиционируем ниже нижней границы квадрата */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 50px;
+            background-color: white; /* Цвет фона впадины */
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border: 1px solid #D8D8D8; /* Добавляем обводку */
+        }
+        .bottom-square {
+            width: 200px;
+            height: 20px;
+            background-color: white; /* Цвет фона */
+            border-radius: 15px;
+            margin-top: 0px; /* Убираем отступ между квадратами */
+            z-index: 0; /* Устанавливаем z-index для псевдоэлемента слой */
+        }
+        .black-square-below {
+            width: 141px;
+            height: 40px;
+            background-color: #1B1B1B;
+            border-radius: 20px;
+            margin-top: 0px; /* Убираем отступ между квадратами */
+            border: 1.5px solid #1ADB5C; /* Добавляем серую обводку */
+            display: flex;
+            justify-content: center; /* Центрируем текст по горизонтали */
+            align-items: center; /* Центрируем текст по вертикали */
+            color: white; /* Цвет текста */
+            font-size: 15px; /* Размер шрифта */
+            font-weight: bold; /* Делаем текст жирным */
+            z-index: 2; /* Устанавливаем z-index для псевдоэлемента слой */
+        } 
+        .title {
+            font-size: 20px;
+            text-align: center;
+            color: black; /* Цвет текста */
+            margin-top: 10px; /* Отступ сверху */
+            font-weight: 600; /* Полужирный шрифт */
+        }
+        .currency {
+            color: #A1A1A1; /* Делаем значок рубля серым */
+        }
+        .amount {
+            color: white; /* Делаем число белым */
+        }
+        .text-bottom {
+            position: absolute;
+            bottom: 4px; /* Позиционируем текст в нижней части */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 15px;
+            color: black;
+            z-index: 1; /* Устанавливаем z-index для текста */
+        }
+        .text-bottom::after {
+            content: '▲';
+            position: absolute;
+            top: 50%;
+            left: 100%; /* Позиционируем треугольник правее текста */
+            transform: translateY(-50%);
+            font-size: 15px;
+            color: #454545;
+            margin-left: 10px; /* Добавляем отступ между текстом и треугольником */
+        }
+        .text-bottom::before {
+            content: '▼';
+            position: absolute;
+            top: 50%;
+            right: 100%; /* Позиционируем треугольник левее текста */
+            transform: translateY(-50%);
+            font-size: 15px;
+            color: #454545;
+            margin-right: 10px; /* Добавляем отступ между текстом и треугольником */
+        }
+    </style>
+</head>
+<body>
+    <div class="title">Cryplex</div>
+    <div class="black-square">
+        <div class="top-left"><span class="currency">&#8381;</span> <span class="amount">120</span></div> <!-- Используем значок рубля и число отдельно -->
+        <div class="gray-text">investment profit</div>
+        <div class="inner-grey-square">▴  +120%</div> <!-- Добавляем текст внутри внутреннего черного квадрата -->
+    </div>
+    <div class="white-squares-container">
+        <div class="white-square"></div> <!-- Добавляем белый квадрат -->
+        <div class="white-square"></div> <!-- Добавляем белый квадрат -->
+        <div class="white-square"></div> <!-- Добавляем белый квадрат -->
+        <div class="white-square"></div> <!-- Добавляем белый квадрат -->
+    </div>
+    <div class="large-square">
+        <div class="text-bottom">100</div> <!-- Добавляем текст в нижнюю часть большого квадрата -->
+    </div> <!-- Добавляем большой квадрат -->
+    <div class="bottom-square"></div> <!-- Добавляем нижний белый квадрат -->
+    <div class="black-square-below">BUY</div> <!-- Добавляем черный квадрат с закругленными краями под .bottom-square и текстом "buy" -->
+</body>
+</html>
